@@ -1,0 +1,68 @@
+Documentation du processus de débogage d'une application React
+
+ 1. Configuration de l'application exemple
+
+    - `App.js` : Composant principal
+    - `Counter.js` : Composant de compteur
+    - `UserInfo.js` : Composant affichant les informations utilisateur
+
+    L'application gère l'état avec useState et passe des props entre les composants.
+
+ 2. Installation des React Developer Tools
+
+    J'ai installé l'extension React Developer Tools pour Google Chrome.
+
+ 3. Inspection de l'arbre des composants
+
+    J'ai ouvert les outils de développement et navigué vers l'onglet "Components". L'arbre des composants.
+
+    4. Identification des problèmes
+
+    En inspectant l'arbre des composants, j'ai identifié les problèmes suivants :
+
+        a) Dans le composant UserInfo :
+               - Problème : La propriété "age" de l'objet user était mal orthographiée (écrite "ag").
+               - Impact : L'âge de l'utilisateur ne s'affichait pas correctement.
+
+        b) Dans le composant Counter :
+               - Problème : La prop "setCount" n'était pas utilisée de manière optimale.
+              - Impact : Risque potentiel de mises à jour d'état incorrectes dans certains scénarios.
+
+    5. Utilisation des outils pour diagnostiquer et corriger
+
+         Pour le problème :
+            a) dans UserInfo :
+
+                1. J'ai utilisé l'inspecteur de props dans les React Developer Tools.
+                2. J'ai vérifié les valeurs passées au composant UserInfo.
+                3. J'ai constaté que la prop "user" contenait bien une propriété "age", mais qu'elle était mal accédée dans le code.
+
+Correction :
+Dans le fichier `UserInfo.js`, j'ai modifié :
+```jsx
+<p>Âge : {user.ag}</p>
+```
+en :
+```jsx
+<p>Âge : {user.age}</p>
+```
+
+        Pour le problème 
+            b) dans Counter :
+
+                1. J'ai examiné les props du composant Counter dans les React Developer Tools.
+                2. J'ai vérifié l'implémentation du composant dans le code source.
+                3. J'ai identifié que la fonction setCount était utilisée directement avec la nouvelle valeur, ce qui peut causer des problèmes dans certains cas.
+
+Correction :
+Dans le fichier `Counter.js`, j'ai modifié :
+```jsx
+<button onClick={() => setCount(count + 1)}>Incrémenter</button>
+```
+en :
+```jsx
+<button onClick={() => setCount(prevCount => prevCount + 1)}>Incrémenter</button>
+```
+
+
+7. Vérification du fonctionnement après débogage.
